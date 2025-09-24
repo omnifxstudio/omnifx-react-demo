@@ -8,7 +8,7 @@ This repository contains the source code for a live, interactive demonstration o
 
 ### About OMNI-FX
 
-OMNI-FX is a premium, high-performance icon system built on the Rive platform, designed for professionals who want to create fluid, interactive, and state-aware user interfaces.
+OMNI-FX is a premium, high-performance motion design system built on the Rive platform, designed for professionals who want to create fluid, interactive, and state-aware user interfaces.
 
 **Learn more and get the full pack at [YourFramerWebsite.com](https://[YOUR_FRAMER_LINK_HERE].framer.website)**
 
