@@ -1,0 +1,189 @@
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #e4e4e6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* Updated Page Header Styles to match your screenshot */
+.page-header {
+  width: 900px;
+  max-width: 100%;
+  margin-bottom: 24px;
+  text-align: left; /* Changed from center */
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700; /* Bolder */
+  color: #111827;
+  margin: 0;
+}
+
+.subtitle {
+  display: inline-block; /* Allows background to wrap text */
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563; /* Darker grey text for contrast */
+  margin-top: 12px;
+  background-color: #e5e7eb; /* Light grey pill background */
+  padding: 4px 12px;
+  border-radius: 999px; /* Creates the pill shape */
+}
+
+
+/* The main container that looks like a phone/app window */
+.app-container {
+  display: flex;
+  width: 900px;
+  max-width: 100%;
+  height: 750px;
+  max-height: 80vh;
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Left Panel (The grey UI mockup area) */
+.left-panel {
+  flex: 1;
+  background-color: #f0f0f0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Right Panel (The white sidebar with the Rive canvas) */
+.right-panel {
+  width: 300px;
+  background-color: #ffffff;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Right Sidebar Text Styles */
+.sidebar-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 16px;
+}
+
+.sidebar-caption {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 16px;
+  max-width: 200px;
+  line-height: 1.5;
+}
+
+
+/* Rive Canvas Container */
+.rive-container {
+  width: 128px;
+  height: 128px;
+  cursor: pointer;
+  border-radius: 22px;
+  border: 1px solid #d0d5dd;
+}
+
+.rive-container:active {
+  /* No transform effect on click */
+}
+
+.rive-container canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+/* The grey placeholder elements for the UI mockup */
+.placeholder {
+  background-color: #d9d9d9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+/* Mockup Text Styles */
+.mock-ui-label, .mock-ui-button {
+  font-size: 14px;
+  color: #8a8a8a;
+  font-weight: 500;
+}
+
+.mock-ui-button {
+  color: #f0f0f0;
+  background-color: #c4c4c4;
+  padding: 4px 10px;
+  border-radius: 5px;
+}
+
+
+.header {
+  width: 60%;
+  height: 32px;
+}
+.subheader {
+  width: 40%;
+  height: 20px;
+}
+.line {
+  width: 80%;
+  height: 28px;
+}
+.line.short {
+  width: 60%;
+}
+.image-box {
+  width: 100%;
+  height: 150px;
+  justify-content: center;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 900px) {
+  .app-container {
+    flex-direction: column;
+    height: auto;
+    max-height: none;
+  }
+  
+  .page-header {
+      text-align: center;
+  }
+
+  .right-panel {
+    width: 100%;
+    order: 1;
+    padding: 24px;
+  }
+
+  .left-panel {
+    width: 100%;
+    order: 2;
+    padding: 24px;
+    gap: 16px;
+  }
+}
