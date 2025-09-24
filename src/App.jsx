@@ -11,12 +11,14 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 import "./App.css";
 
+// THE FIX IS HERE: We now import the Rive file directly.
+import RiveFile from './assets/omnifx_starter.riv';
+
 // --- Rive Configuration ---
 const ARTBOARD = "OMNI_MagicBoard";
 const STATE_MACHINE = "StateMachine";
 
 // --- State Definitions ---
-// We define our states as objects for clarity and easy management.
 const defaultState = {
   iconIndex: 2,
   colorStyle: 2,
@@ -38,14 +40,14 @@ const toggledState = {
 export default function App() {
   // --- Rive Setup ---
   const { rive, RiveComponent } = useRive({
-    src: "/omnifx_starter.riv",
+    // THE FIX IS HERE: We now use the imported file variable.
+    src: RiveFile,
     artboard: ARTBOARD,
     stateMachines: STATE_MACHINE,
     autoplay: true,
   });
 
   // --- State Machine Input Hooks ---
-  // Get hooks to control each of the inputs by name.
   const iconIndexInput = useStateMachineInput(rive, STATE_MACHINE, "IconIndex");
   const colorStyleInput = useStateMachineInput(rive, STATE_MACHINE, "ColorStyle");
   const backgroundStyleInput = useStateMachineInput(rive, STATE_MACHINE, "BackgroundStyle");
@@ -56,12 +58,9 @@ export default function App() {
 
   // --- React State & Refs ---
   const [toggled, setToggled] = useState(false);
-  // A ref is used to ensure our initialization logic runs only once on mount.
   const isInitialMount = useRef(true);
 
   // --- Core Logic: Applying State to Rive ---
-  // This function takes a state object and applies its values to the Rive inputs.
-  // It's wrapped in useCallback for performance optimization.
   const applyState = useCallback((state) => {
     if (!rive || !iconIndexInput || !colorStyleInput || !backgroundStyleInput || !hoverStyleInput || !gradientFillInput || !disabledStateInput) return;
     
@@ -73,23 +72,19 @@ export default function App() {
     disabledStateInput.value = state.disabledState;
   }, [rive, iconIndexInput, colorStyleInput, backgroundStyleInput, hoverStyleInput, gradientFillInput, disabledStateInput]);
   
-  // This single useEffect handles both the initial load AND all subsequent clicks.
   useEffect(() => {
     if (rive && clickTriggerInput) { 
-      // On the initial mount, apply the default state to prevent a blank icon.
       if (isInitialMount.current) {
         applyState(defaultState);
         clickTriggerInput.fire();
         isInitialMount.current = false;
       } else {
-        // On subsequent renders (when 'toggled' changes), apply the correct state.
         applyState(toggled ? toggledState : defaultState);
         clickTriggerInput.fire();
       }
     }
   }, [toggled, rive, clickTriggerInput, applyState]);
 
-  // The click handler now only needs to toggle the state. The useEffect handles the rest.
   const handleRiveClick = () => setToggled(!toggled);
 
   // --- Render ---
