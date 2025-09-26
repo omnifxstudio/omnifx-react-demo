@@ -4,7 +4,7 @@
 // This component demonstrates how to initialize and control Rive
 // state machines in a modern React (Vite) application.
 //
-// Learn more at [YourFramerWebsite.com]
+// Learn more at [www.omnifx.studio]
 // =================================================================
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
