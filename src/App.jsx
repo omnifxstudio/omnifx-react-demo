@@ -131,6 +131,7 @@ export default function App() {
             role="button"
             tabIndex={0}
             onClick={handleRiveClick}
+            onTouchStart={handleRiveClick}
             onKeyDown={(e) => (e.key === "Enter" ? handleRiveClick(e) : null)}
             aria-label="Omni icon preview (click to toggle)"
           >
