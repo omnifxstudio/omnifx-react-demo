@@ -1,8 +1,8 @@
 // =================================================================
-// OMNI-FX: Live React Demo
-// A real-world example of the OMNI-FX state machine icon system.
-// This component demonstrates how to initialize and control Rive
-// state machines in a modern React (Vite) application.
+// OMNI-FX: Live React Demo (v3 - Device-Aware Hover)
+// This is the final, production-ready code. It detects touch
+// devices to programmatically disable hover effects on mobile,
+// preventing the "sticky hover" bug.
 //
 // Learn more at [www.omnifx.studio]
 // =================================================================
@@ -11,7 +11,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 import "./App.css";
 
-// THE FIX IS HERE: We now import the Rive file directly.
+// Import the Rive file directly for robust pathing.
 import RiveFile from './assets/omnifx_starter.riv';
 
 // --- Rive Configuration ---
@@ -19,11 +19,11 @@ const ARTBOARD = "OMNI_MagicBoard";
 const STATE_MACHINE = "StateMachine";
 
 // --- State Definitions ---
+// Note: The hoverStyle is now controlled by the component's logic, not here.
 const defaultState = {
   iconIndex: 2,
   colorStyle: 2,
   backgroundStyle: 0,
-  hoverStyle: 1,
   gradientFill: 1,
   disabledState: 0,
 };
@@ -32,15 +32,21 @@ const toggledState = {
   iconIndex: 3,
   colorStyle: 2,
   backgroundStyle: 0,
-  hoverStyle: 1,
   gradientFill: 1,
   disabledState: 0,
 };
 
+// --- Device Detection Utility (Runs once) ---
+// This simple function checks if the browser supports touch events.
+const isTouchDevice = () => {
+  if (typeof window === 'undefined') return false;
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+};
+
+
 export default function App() {
   // --- Rive Setup ---
   const { rive, RiveComponent } = useRive({
-    // THE FIX IS HERE: We now use the imported file variable.
     src: RiveFile,
     artboard: ARTBOARD,
     stateMachines: STATE_MACHINE,
@@ -59,6 +65,8 @@ export default function App() {
   // --- React State & Refs ---
   const [toggled, setToggled] = useState(false);
   const isInitialMount = useRef(true);
+  // This ref stores the result of our device check so it only runs once.
+  const isMobileDevice = useRef(isTouchDevice());
 
   // --- Core Logic: Applying State to Rive ---
   const applyState = useCallback((state) => {
@@ -67,14 +75,20 @@ export default function App() {
     iconIndexInput.value = state.iconIndex;
     colorStyleInput.value = state.colorStyle;
     backgroundStyleInput.value = state.backgroundStyle;
-    hoverStyleInput.value = state.hoverStyle;
+    // We no longer set hoverStyle here, it's set once on initialization.
     gradientFillInput.value = state.gradientFill;
     disabledStateInput.value = state.disabledState;
   }, [rive, iconIndexInput, colorStyleInput, backgroundStyleInput, hoverStyleInput, gradientFillInput, disabledStateInput]);
   
   useEffect(() => {
-    if (rive && clickTriggerInput) { 
+    if (rive && clickTriggerInput && hoverStyleInput) { 
       if (isInitialMount.current) {
+        // THE CRITICAL FIX IS HERE:
+        // On initial mount, we set the hover style based on the device type.
+        // If it's a mobile device, disable hover animations (set to 0).
+        // If it's a desktop device, enable them (set to 1).
+        hoverStyleInput.value = isMobileDevice.current ? 0 : 1;
+
         applyState(defaultState);
         clickTriggerInput.fire();
         isInitialMount.current = false;
@@ -83,7 +97,7 @@ export default function App() {
         clickTriggerInput.fire();
       }
     }
-  }, [toggled, rive, clickTriggerInput, applyState]);
+  }, [toggled, rive, clickTriggerInput, applyState, hoverStyleInput]);
 
   const handleRiveClick = () => setToggled(!toggled);
 
@@ -132,7 +146,7 @@ export default function App() {
             tabIndex={0}
             onClick={handleRiveClick}
             onTouchStart={handleRiveClick}
-            onKeyDown={(e) => (e.key === "Enter" ? handleRiveClick(e) : null)}
+            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") ? handleRiveClick(e) : null}
             aria-label="Omni icon preview (click to toggle)"
           >
             <RiveComponent />
@@ -143,3 +157,4 @@ export default function App() {
     </div>
   );
 }
+
