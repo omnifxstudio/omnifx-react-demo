@@ -20,32 +20,31 @@ body {
   padding: 24px;
 }
 
-/*Page Header Styles*/
+/* Page Header Styles */
 .page-header {
   width: 900px;
   max-width: 100%;
   margin-bottom: 24px;
-  text-align: left; /* Changed from center */
+  text-align: left;
 }
 
 .title {
   font-size: 28px;
-  font-weight: 700; /* Bolder */
+  font-weight: 700;
   color: #111827;
   margin: 0;
 }
 
 .subtitle {
-  display: inline-block; /* Allows background to wrap text */
+  display: inline-block;
   font-size: 14px;
   font-weight: 500;
-  color: #4b5563; /* Darker grey text for contrast */
+  color: #4b5563;
   margin-top: 12px;
-  background-color: #e5e7eb; /* Light grey pill background */
+  background-color: #e5e7eb;
   padding: 4px 12px;
-  border-radius: 999px; /* Creates the pill shape */
+  border-radius: 999px;
 }
-
 
 /* The main container that looks like a phone/app window */
 .app-container {
@@ -97,16 +96,15 @@ body {
   line-height: 1.5;
 }
 
-
-/* Rive Canvas Container */
+/* Rive Canvas Container - THE FIX IS HERE */
 .rive-container {
   width: 128px;
   height: 128px;
   cursor: pointer;
   border-radius: 22px;
   border: 1px solid #d0d5dd;
-  /* THE FIX IS HERE: This clips any content that tries to escape the rounded corners. */
-  overflow: hidden; 
+  position: relative; /* Establishes a positioning context */
+  overflow: hidden;   /* Clips any overflowing children (the canvas corners) */
 }
 
 .rive-container:active {
@@ -116,7 +114,7 @@ body {
 .rive-container canvas {
   width: 100%;
   height: 100%;
-  /* The border-radius on the canvas is no longer needed, as the parent container handles the clipping. */
+  /* No border-radius needed here now, the parent container handles the clipping */
 }
 
 /* The grey placeholder elements for the UI mockup */
@@ -141,7 +139,6 @@ body {
   padding: 4px 10px;
   border-radius: 5px;
 }
-
 
 .header {
   width: 60%;
