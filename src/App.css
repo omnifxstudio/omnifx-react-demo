@@ -105,6 +105,8 @@ body {
   cursor: pointer;
   border-radius: 22px;
   border: 1px solid #d0d5dd;
+  /* THE FIX IS HERE: This clips any content that tries to escape the rounded corners. */
+  overflow: hidden; 
 }
 
 .rive-container:active {
@@ -114,7 +116,7 @@ body {
 .rive-container canvas {
   width: 100%;
   height: 100%;
-  border-radius: inherit;
+  /* The border-radius on the canvas is no longer needed, as the parent container handles the clipping. */
 }
 
 /* The grey placeholder elements for the UI mockup */
