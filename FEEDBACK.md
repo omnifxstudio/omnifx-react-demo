@@ -11,7 +11,7 @@ Tell us what felt great, what could be smoother, or what you’d like to see nex
 ## 🧠 Share Your Thoughts
 
 You can:
-- 📝 **Fill out our feedback form:** [Open Form](https://your-feedback-form-link-here)
+- 📝 **Fill out our feedback form:** [Open Form](https://omnifx.studio/feedback--reviews)
 - 📩 **Email us directly:** [hello@omnifx.studio](mailto:hello@omnifx.studio)
 
 Write freely, casually — we read every message.  
